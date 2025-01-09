@@ -7,6 +7,7 @@ Seleccionas empresas y marcas de autos.
 ## 0.2 version
 - Nueva Empresa
 - Dos marcas de auto
+- Efecto de transición al elegir una marca de auto
 - Se añadió dos botones
   - Mute
   - Next Song
