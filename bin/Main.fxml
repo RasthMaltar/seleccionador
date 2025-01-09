@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.EventQueue">
+<BorderPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.EventQueue">
    <top>
       <Label fx:id="genero" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Marca de auto" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
@@ -19,21 +22,51 @@
          </BorderPane.margin>
       </Label>
    </top>
-   <bottom>
-      <ChoiceBox fx:id="Marca" prefWidth="150.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </ChoiceBox>
-   </bottom>
-   <right>
-      <ChoiceBox fx:id="Empresa" prefWidth="150.0" BorderPane.alignment="CENTER" />
-   </right>
    <center>
-      <ImageView fx:id="Imagen" fitHeight="200.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fx:id="Imagen" fitHeight="300.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
             <Image url="@Question.png" />
          </image>
       </ImageView>
    </center>
+   <left>
+      <VBox alignment="CENTER" prefHeight="350.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Empresa">
+               <font>
+                  <Font name="Dubai Regular" size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="Empresa" maxWidth="1.7976931348623157E308" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </ChoiceBox>
+            <Label text="Marca">
+               <font>
+                  <Font name="Dubai Regular" size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="Marca" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </ChoiceBox>
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="37.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="Mute" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#Mute" text="Mute" />
+            <Button fx:id="NextSong" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#NextSong" text="Next Song" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
 </BorderPane>

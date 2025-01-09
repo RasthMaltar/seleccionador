@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class EventQueue implements Initializable{
 	
@@ -25,6 +28,8 @@ public class EventQueue implements Initializable{
 	private File archivo;
 	private File[] musica;
 	private int n;
+	private FadeTransition Fade;
+	
 	private List<File> ruta;
 	@FXML
 	private Button connect;
@@ -36,13 +41,19 @@ public class EventQueue implements Initializable{
 	private Label genero;
 	@FXML
 	private ChoiceBox<String> Marca;
+	@FXML
+	private Button NextSong;
+	@FXML
+	private Button Mute;
 	public Image imagen;
+	
 	
 	public void Prendido(ActionEvent e) {
 		String empresa = Empresa.getValue() == null ? "Empresa no seleccionada" : Empresa.getValue();
 		String marca = Marca.getValue() == null ? "???" : Marca.getValue();
 		genero.setText(empresa+", "+marca);
 		prueba();
+		Fade.play();
 	}
 
 	public void setMarca(ActionEvent e) {
@@ -59,6 +70,10 @@ public class EventQueue implements Initializable{
 				break;
 			case "Ford":
 				Marca.getItems().addAll(Cars.Ford);
+				break;
+			case "Dodge":
+				Marca.getItems().addAll(Cars.Dodge);
+				break;
 			}
 		}
 	}
@@ -80,21 +95,52 @@ public class EventQueue implements Initializable{
 		setImage(Empresa.getValue()+" "+Marca.getValue(), xd);
 		}
 	}
+	
+	public void Mute() {
+		if(!mediaPlayer.isMute()) {
+			mediaPlayer.setMute(true);
+		} else {
+			mediaPlayer.setMute(false);
+		}
+	}
+	
+	public void NextSong() {
+		if(n < ruta.size() - 1) {
+			mediaPlayer.stop();
+			n++;
+			media = new Media(ruta.get(n).toURI().toString());
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
+		} else {
+			mediaPlayer.stop();
+			n = 0;
+			media = new Media(ruta.get(n).toURI().toString());
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
+		}
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Fade = new FadeTransition();
+		Fade.setNode(Imagen);
+		Fade.setFromValue(0);
+		Fade.setInterpolator(Interpolator.EASE_OUT);
+		Fade.setDuration(Duration.millis(500));
+		Fade.setToValue(1);
+		
 		ruta = new ArrayList<>();
 		archivo = new File("Archivo");
 		musica = archivo.listFiles();
 		
 		for(File f : musica) {
 			ruta.add(f);
+			System.out.println(f);
 		}
 		
 		media = new Media(ruta.get(n).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setAutoPlay(true);
 		mediaPlayer.setVolume(0.5);
-		mediaPlayer.setRate(1.1);
 		Empresa.getItems().addAll(Cars.Empresa);
 		Empresa.setOnAction(this::setMarca);
 		Marca.setOnAction(this::Prendido);
